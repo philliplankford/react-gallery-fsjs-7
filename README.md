@@ -1,6 +1,6 @@
 # Treehouse FSJS Project 7
 
-A photo gallery.
+A React photo gallery.
 
 # Getting Started with Create React App
 
