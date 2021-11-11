@@ -1,5 +1,5 @@
 import React, { Component } from 'react'; // default exports, { named exports }
-import { Route, Routes, BrowserRouter as Router, Navigate } from 'react-router-dom';
+import { Route, Switch, BrowserRouter as Router, Redirect } from 'react-router-dom';
 import axios from 'axios';
 
 /* === COMPONENT IMPORT === */
@@ -45,14 +45,17 @@ export default class App extends Component {
         <div className="container">
           <SearchForm onSearch={this.performSearch}/>
           <MainNav />
-          <Routes>
-            <Route exact path="/" element={<Navigate replace to="/cats" />}/>
-            <Route path="/cats" element={<PhotoContainer results={this.state.photos} title={'cats'}/>} />
-            <Route path="/dogs" element={<PhotoContainer results={this.state.photos} title={'dogs'}/>} />
-            <Route path="/computers" element={<PhotoContainer results={this.state.photos} title={'computers'}/>} />
-            <Route path="/search/:query" element={<PhotoContainer results={this.state.photos} title={'null'}/>} />
-            <Route path="*" element={<Error />} />
-          </Routes>
+          { 
+          this.state.loading ? <p>Loading images...</p> :
+            <Switch>
+              <Route exact path="/" component={ () => <Redirect to="/cats" />}/>
+              <Route path="/cats" component={ () => <PhotoContainer results={this.state.photos} title={'cats'}/>} />
+              <Route path="/dogs" component={ () => <PhotoContainer results={this.state.photos} title={'dogs'}/>} />
+              <Route path="/computers" component={ () => <PhotoContainer results={this.state.photos} title={'computers'}/>} />
+              <Route exact path="/search/:query" component={ () => <PhotoContainer results={this.state.photos} title={null}/>} />
+              <Route path="*" component={ () => <Error />} />
+            </Switch>
+          }
         </div>
       </Router>
     );

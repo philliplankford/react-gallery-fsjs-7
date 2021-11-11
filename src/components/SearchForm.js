@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-// import { useNavigate } from 'react-router-dom';
+import { withRouter} from 'react-router-dom';
 
 // this is a controlled component. it maintains its own state based on user input
 
-export default class SearchForm extends Component {
+class SearchForm extends Component { //export default
 
     constructor(props) {
         super(props);
@@ -15,13 +15,25 @@ export default class SearchForm extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
       }
 
+    componentDidUpdate(prevProps) {
+        if(prevProps.location.pathname !== this.props.location.pathname) {
+            if(this.props.location.pathname.includes('/search')){
+                const searchText = this.props.location.pathname.replace('/search/', '');
+                this.props.onSearch(searchText);
+            }
+        }
+    }
+
     handleChange(e) {
         this.setState({value: e.target.value});
     }
 
     handleSubmit(e) {
         e.preventDefault();
+        let query = this.state.value;
+        let path = `/search/${query}`;
         this.props.onSearch(this.state.value);
+        this.props.history.push(path);
         e.target.reset();
     }
 
@@ -39,3 +51,5 @@ export default class SearchForm extends Component {
         );
     }
 }
+
+export default withRouter(SearchForm);
