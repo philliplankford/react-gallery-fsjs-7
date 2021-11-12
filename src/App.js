@@ -11,6 +11,8 @@ import Error from './components/Error';
 import apiKey from './config';
 import './css/index.css';
 
+/* === APP === */
+
 export default class App extends Component {
 
   constructor() {
