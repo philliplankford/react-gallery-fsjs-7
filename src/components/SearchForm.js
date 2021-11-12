@@ -3,32 +3,33 @@ import { withRouter} from 'react-router-dom';
 
 // this is a controlled component. it maintains its own state based on user input
 
-class SearchForm extends Component { //export default
+class SearchForm extends Component {
 
     constructor(props) {
         super(props);
         this.state ={
           value: ''
         }
-    
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
+
+        //.bind is no longer necessary as of es6 arrow functions auto bind
+        // this.handleChange = this.handleChange.bind(this);
+        // this.handleSubmit = this.handleSubmit.bind(this);
       }
 
     componentDidUpdate(prevProps) {
         if(prevProps.location.pathname !== this.props.location.pathname) {
             if(this.props.location.pathname.includes('/search')){
-                const searchText = this.props.location.pathname.replace('/search/', '');
-                this.props.onSearch(searchText);
+                const query = this.props.location.pathname.replace('/search/', '');
+                this.props.onSearch(query);
             }
         }
     }
 
-    handleChange(e) {
+    handleChange = (e) => {
         this.setState({value: e.target.value});
     }
 
-    handleSubmit(e) {
+    handleSubmit = (e) => {
         e.preventDefault();
         let query = this.state.value;
         let path = `/search/${query}`;
@@ -52,4 +53,4 @@ class SearchForm extends Component { //export default
     }
 }
 
-export default withRouter(SearchForm);
+export default withRouter(SearchForm); // give the searchform access to the router history & redirect permissions
