@@ -8,7 +8,8 @@ class SearchForm extends Component {
     constructor(props) {
         super(props);
         this.state ={
-          value: ''
+          value: '',
+          lastSearch: ''
         }
 
         //.bind is no longer necessary as of es6 arrow functions auto bind
@@ -16,6 +17,7 @@ class SearchForm extends Component {
         // this.handleSubmit = this.handleSubmit.bind(this);
       }
 
+    
     componentDidUpdate(prevProps) { // invoked after updating occurs
         if(prevProps.location.pathname !== this.props.location.pathname) { // a condition prevents infinite loops
             if(this.props.location.pathname.includes('/search')){ // use path as state gets updated each handleChange
@@ -24,6 +26,14 @@ class SearchForm extends Component {
             }
         }
     }
+    
+    /* === PREVSTATE SHENANIGANS === */
+    // componentDidUpdate(prevProps, prevState) {
+    //     if (prevState.lastSearch!== this.state.lastSearch) {
+    //         const query = prevState.lastSearch;
+    //         this.props.onSearch(query);
+    //     }
+    // }
 
     handleChange = (e) => {
         this.setState({value: e.target.value});
@@ -33,6 +43,7 @@ class SearchForm extends Component {
         e.preventDefault();
         let query = this.state.value;
         let path = `/search/${query}`;
+        // this.setState({lastSearch: this.state.value})
         this.props.onSearch(this.state.value);
         this.props.history.push(path);
         e.target.reset();

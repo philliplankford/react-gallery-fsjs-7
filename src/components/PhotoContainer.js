@@ -10,8 +10,8 @@ const PhotoContainer = ({ results, title }) => {
     let photos;
 
     if (results.length > 0) {
-        photos = results.map( photo => <Photo key={photo.id} url={photo.url_c} /> );
-        // https://live.staticflickr.com/${photo.server}/{photo.id}_${photo.secret}_c.jpg full url
+        photos = results.map( photo => <Photo key={photo.id} url={`https://live.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}.jpg`} /> );
+        // https://live.staticflickr.com/${photo.server}/{photo.id}_${photo.secret}_c.jpg full url template
     } else {
         photos = <NotFound />
     }
