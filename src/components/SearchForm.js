@@ -26,14 +26,6 @@ class SearchForm extends Component {
             }
         }
     }
-    
-    /* === PREVSTATE SHENANIGANS === */
-    // componentDidUpdate(prevProps, prevState) {
-    //     if (prevState.lastSearch!== this.state.lastSearch) {
-    //         const query = prevState.lastSearch;
-    //         this.props.onSearch(query);
-    //     }
-    // }
 
     handleChange = (e) => {
         this.setState({value: e.target.value});
